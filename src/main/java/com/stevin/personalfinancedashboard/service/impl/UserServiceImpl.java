@@ -6,6 +6,8 @@ import com.stevin.personalfinancedashboard.entity.User;
 import com.stevin.personalfinancedashboard.repository.UserRepository;
 import com.stevin.personalfinancedashboard.service.UserService;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -23,5 +25,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public User registerUser(User user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public boolean login(String email, String password) {
+
+        Optional<User> userOptional = userRepository.findByEmail(email);
+
+        if (userOptional.isPresent()) {
+
+            User user = userOptional.get();
+
+            return user.getPassword().equals(password);
+        }
+
+        return false;
     }
 }
