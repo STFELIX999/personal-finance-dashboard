@@ -1,6 +1,5 @@
 package com.stevin.personalfinancedashboard.service;
 
-public interface UserService
-{
+public interface UserService {
     String getWelcomeMessage();
 }
