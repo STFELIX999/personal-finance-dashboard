@@ -6,6 +6,7 @@ import com.stevin.personalfinancedashboard.entity.User;
 import com.stevin.personalfinancedashboard.service.UserService;
 
 import com.stevin.personalfinancedashboard.dto.LoginRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -40,5 +41,10 @@ public class UserController {
         }
 
         return "Invalid Email or Password";
+    }
+
+    @GetMapping
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 }

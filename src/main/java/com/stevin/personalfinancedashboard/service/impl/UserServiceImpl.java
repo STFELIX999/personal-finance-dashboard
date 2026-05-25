@@ -7,6 +7,7 @@ import com.stevin.personalfinancedashboard.repository.UserRepository;
 import com.stevin.personalfinancedashboard.service.UserService;
 
 import java.util.Optional;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -38,7 +39,11 @@ public class UserServiceImpl implements UserService {
 
             return user.getPassword().equals(password);
         }
-
         return false;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

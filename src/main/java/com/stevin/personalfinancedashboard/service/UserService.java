@@ -1,6 +1,7 @@
 package com.stevin.personalfinancedashboard.service;
 
 import com.stevin.personalfinancedashboard.entity.User;
+import java.util.List;
 
 public interface UserService {
 
@@ -9,4 +10,6 @@ public interface UserService {
     User registerUser(User user);
 
     boolean login(String email, String password);
+
+    List<User> getAllUsers();
 }
