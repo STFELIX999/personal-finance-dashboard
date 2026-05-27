@@ -1,5 +1,6 @@
 package com.stevin.personalfinancedashboard.service.impl;
 
+import com.stevin.personalfinancedashboard.dto.UserResponse;
 import org.springframework.stereotype.Service;
 
 import com.stevin.personalfinancedashboard.entity.User;
@@ -8,6 +9,7 @@ import com.stevin.personalfinancedashboard.service.UserService;
 
 import java.util.Optional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -45,5 +47,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<UserResponse> getAllUserResponses() {
+
+        return userRepository.findAll()
+                .stream()
+                .map(user -> new UserResponse(
+                        user.getId(),
+                        user.getName(),
+                        user.getEmail()))
+                .collect(Collectors.toList());
     }
 }

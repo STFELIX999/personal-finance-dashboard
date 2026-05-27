@@ -1,5 +1,6 @@
 package com.stevin.personalfinancedashboard.controller;
 
+import com.stevin.personalfinancedashboard.dto.UserResponse;
 import org.springframework.web.bind.annotation.*;
 
 import com.stevin.personalfinancedashboard.entity.User;
@@ -46,5 +47,10 @@ public class UserController {
     @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/safe")
+    public List<UserResponse> getSafeUsers() {
+        return userService.getAllUserResponses();
     }
 }
