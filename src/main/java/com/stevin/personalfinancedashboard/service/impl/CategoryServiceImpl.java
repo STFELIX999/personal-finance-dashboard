@@ -1,7 +1,9 @@
 package com.stevin.personalfinancedashboard.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.stevin.personalfinancedashboard.dto.CategoryResponse;
 import org.springframework.stereotype.Service;
 
 import com.stevin.personalfinancedashboard.entity.Category;
@@ -27,5 +29,16 @@ public class CategoryServiceImpl
     @Override
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
+    }
+
+    @Override
+    public List<CategoryResponse> getAllCategoryResponses() {
+
+        return categoryRepository.findAll()
+                .stream()
+                .map(category -> new CategoryResponse(
+                        category.getId(),
+                        category.getName()))
+                .collect(Collectors.toList());
     }
 }
