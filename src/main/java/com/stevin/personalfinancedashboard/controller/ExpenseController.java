@@ -3,6 +3,7 @@ package com.stevin.personalfinancedashboard.controller;
 import com.stevin.personalfinancedashboard.dto.ExpenseRequest;
 import com.stevin.personalfinancedashboard.entity.Expense;
 import com.stevin.personalfinancedashboard.service.ExpenseService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class ExpenseController {
 
     @PostMapping
     public Expense createExpense(
+            @Valid
             @RequestBody ExpenseRequest request) {
 
         return expenseService.createExpense(request);

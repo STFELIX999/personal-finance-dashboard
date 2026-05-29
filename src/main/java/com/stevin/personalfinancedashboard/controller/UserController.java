@@ -1,6 +1,8 @@
 package com.stevin.personalfinancedashboard.controller;
 
+import com.stevin.personalfinancedashboard.dto.UserRequest;
 import com.stevin.personalfinancedashboard.dto.UserResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import com.stevin.personalfinancedashboard.entity.User;
@@ -25,8 +27,11 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public User registerUser(@RequestBody User user) {
-        return userService.registerUser(user);
+    public User registerUser(
+            @Valid
+            @RequestBody UserRequest request) {
+
+        return userService.registerUser(request);
     }
 
     @PostMapping("/login")

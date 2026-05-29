@@ -2,7 +2,9 @@ package com.stevin.personalfinancedashboard.controller;
 
 import java.util.List;
 
+import com.stevin.personalfinancedashboard.dto.CategoryRequest;
 import com.stevin.personalfinancedashboard.dto.CategoryResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import com.stevin.personalfinancedashboard.entity.Category;
@@ -21,9 +23,10 @@ public class CategoryController {
 
     @PostMapping
     public Category createCategory(
-            @RequestBody Category category) {
+            @Valid
+            @RequestBody CategoryRequest request) {
 
-        return categoryService.saveCategory(category);
+        return categoryService.saveCategory(request);
     }
 
     @GetMapping

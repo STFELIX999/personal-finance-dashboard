@@ -2,6 +2,8 @@ package com.stevin.personalfinancedashboard.controller;
 
 import java.util.List;
 
+import com.stevin.personalfinancedashboard.dto.IncomeRequest;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import com.stevin.personalfinancedashboard.entity.Income;
@@ -20,9 +22,10 @@ public class IncomeController {
 
     @PostMapping
     public Income createIncome(
-            @RequestBody Income income) {
+            @Valid
+            @RequestBody IncomeRequest request) {
 
-        return incomeService.saveIncome(income);
+        return incomeService.saveIncome(request);
     }
 
     @GetMapping

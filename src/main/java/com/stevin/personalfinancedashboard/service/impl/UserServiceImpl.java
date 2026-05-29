@@ -1,5 +1,6 @@
 package com.stevin.personalfinancedashboard.service.impl;
 
+import com.stevin.personalfinancedashboard.dto.UserRequest;
 import com.stevin.personalfinancedashboard.dto.UserResponse;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerUser(User user) {
+    public User registerUser(UserRequest request) {
+
+        User user = new User();
+
+        user.setName(request.getName());
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+
         return userRepository.save(user);
     }
 

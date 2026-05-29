@@ -2,6 +2,7 @@ package com.stevin.personalfinancedashboard.service.impl;
 
 import java.util.List;
 
+import com.stevin.personalfinancedashboard.dto.IncomeRequest;
 import org.springframework.stereotype.Service;
 
 import com.stevin.personalfinancedashboard.entity.Income;
@@ -19,7 +20,14 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
-    public Income saveIncome(Income income) {
+    public Income saveIncome(IncomeRequest request) {
+
+        Income income = new Income();
+
+        income.setAmount(request.getAmount());
+        income.setSource(request.getSource());
+        income.setDate(request.getDate());
+
         return incomeRepository.save(income);
     }
 

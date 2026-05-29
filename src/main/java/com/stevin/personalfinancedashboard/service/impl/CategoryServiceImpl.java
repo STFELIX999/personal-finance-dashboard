@@ -3,6 +3,7 @@ package com.stevin.personalfinancedashboard.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.stevin.personalfinancedashboard.dto.CategoryRequest;
 import com.stevin.personalfinancedashboard.dto.CategoryResponse;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,11 @@ public class CategoryServiceImpl
     }
 
     @Override
-    public Category saveCategory(Category category) {
+    public Category saveCategory(CategoryRequest request) {
+        Category category = new Category();
+
+        category.setName(request.getName());
+
         return categoryRepository.save(category);
     }
 

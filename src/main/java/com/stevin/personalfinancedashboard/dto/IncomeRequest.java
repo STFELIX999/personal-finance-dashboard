@@ -1,23 +1,19 @@
 package com.stevin.personalfinancedashboard.dto;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 @Getter
 @Setter
-public class ExpenseRequest {
+public class IncomeRequest {
 
     @NotNull(message = "Amount is required")
     private BigDecimal amount;
 
-    @NotBlank(message = "Description is required")
-    private String description;
-
+    private String source;
     private LocalDate date;
-    private Long categoryId;
 }
