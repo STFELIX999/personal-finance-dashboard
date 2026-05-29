@@ -2,6 +2,7 @@ package com.stevin.personalfinancedashboard.service.impl;
 
 import java.util.List;
 
+import com.stevin.personalfinancedashboard.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.stevin.personalfinancedashboard.dto.ExpenseRequest;
@@ -30,7 +31,7 @@ public class ExpenseServiceImpl implements ExpenseService {
                 categoryRepository.findById(
                                 request.getCategoryId())
                         .orElseThrow(() ->
-                                new RuntimeException("Category not found with id: "
+                                new ResourceNotFoundException("Category not found with id: "
                                         + request.getCategoryId()));
 
         Expense expense = new Expense();
@@ -55,13 +56,13 @@ public class ExpenseServiceImpl implements ExpenseService {
         Expense expense = expenseRepository
                 .findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException(
+                        new ResourceNotFoundException(
                                 "Expense not found"));
 
         Category category = categoryRepository
                 .findById(request.getCategoryId())
                 .orElseThrow(() ->
-                        new RuntimeException(
+                        new ResourceNotFoundException(
                                 "Category not found"));
 
         expense.setAmount(request.getAmount());
@@ -78,7 +79,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         Expense expense = expenseRepository
                 .findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException(
+                        new ResourceNotFoundException(
                                 "Expense not found"));
 
         expenseRepository.delete(expense);
