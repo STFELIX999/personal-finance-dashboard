@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.stevin.personalfinancedashboard.dto.ExpenseRequest;
 import com.stevin.personalfinancedashboard.entity.Expense;
+import org.springframework.data.domain.Page;
 
 public interface ExpenseService {
 
@@ -14,4 +15,6 @@ public interface ExpenseService {
     Expense updateExpense(Long id, ExpenseRequest request);
 
     void deleteExpense(Long id);
+
+    Page<Expense> getExpenses(int page, int size);
 }

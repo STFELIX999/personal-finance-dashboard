@@ -5,6 +5,8 @@ import com.stevin.personalfinancedashboard.dto.UserResponse;
 import com.stevin.personalfinancedashboard.entity.User;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 public interface UserService {
 
     String getWelcomeMessage();
@@ -15,4 +17,6 @@ public interface UserService {
 
     List<User> getAllUsers();
     List<UserResponse> getAllUserResponses();
+
+    Page<User> getUsers(int page, int size);
 }

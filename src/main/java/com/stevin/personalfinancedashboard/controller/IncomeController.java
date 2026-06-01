@@ -3,7 +3,9 @@ package com.stevin.personalfinancedashboard.controller;
 import java.util.List;
 
 import com.stevin.personalfinancedashboard.dto.IncomeRequest;
+
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import com.stevin.personalfinancedashboard.entity.Income;
@@ -31,5 +33,17 @@ public class IncomeController {
     @GetMapping
     public List<Income> getAllIncomes() {
         return incomeService.getAllIncomes();
+    }
+
+    @GetMapping("/paged")
+    public Page<Income> getExpensesPaged(
+
+            @RequestParam(defaultValue = "0")
+            int page,
+
+            @RequestParam(defaultValue = "5")
+            int size) {
+
+        return incomeService.getIncomes(page, size);
     }
 }

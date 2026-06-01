@@ -2,6 +2,9 @@ package com.stevin.personalfinancedashboard.service.impl;
 
 import com.stevin.personalfinancedashboard.dto.UserRequest;
 import com.stevin.personalfinancedashboard.dto.UserResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.stevin.personalfinancedashboard.entity.User;
@@ -67,5 +70,12 @@ public class UserServiceImpl implements UserService {
                         user.getName(),
                         user.getEmail()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<User> getUsers(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        return userRepository.findAll(pageable);
     }
 }

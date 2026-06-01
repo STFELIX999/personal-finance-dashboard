@@ -12,6 +12,10 @@ import com.stevin.personalfinancedashboard.repository.CategoryRepository;
 import com.stevin.personalfinancedashboard.repository.ExpenseRepository;
 import com.stevin.personalfinancedashboard.service.ExpenseService;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
 
@@ -84,4 +88,13 @@ public class ExpenseServiceImpl implements ExpenseService {
 
         expenseRepository.delete(expense);
     }
+
+    @Override
+    public Page<Expense> getExpenses(int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        return expenseRepository.findAll(pageable);
+    }
+
 }

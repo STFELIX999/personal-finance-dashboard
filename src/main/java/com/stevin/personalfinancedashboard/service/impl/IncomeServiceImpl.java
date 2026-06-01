@@ -3,6 +3,10 @@ package com.stevin.personalfinancedashboard.service.impl;
 import java.util.List;
 
 import com.stevin.personalfinancedashboard.dto.IncomeRequest;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.stevin.personalfinancedashboard.entity.Income;
@@ -34,5 +38,12 @@ public class IncomeServiceImpl implements IncomeService {
     @Override
     public List<Income> getAllIncomes() {
         return incomeRepository.findAll();
+    }
+
+    @Override
+    public Page<Income> getIncomes(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        return incomeRepository.findAll(pageable);
     }
 }

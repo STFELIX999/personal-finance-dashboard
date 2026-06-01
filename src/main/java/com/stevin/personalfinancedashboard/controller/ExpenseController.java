@@ -6,6 +6,9 @@ import com.stevin.personalfinancedashboard.service.ExpenseService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.List;
 
 @RestController
@@ -48,5 +51,17 @@ public class ExpenseController {
         expenseService.deleteExpense(id);
 
         return "Expense deleted successfully";
+    }
+
+    @GetMapping("/paged")
+    public Page<Expense> getExpensesPaged(
+
+            @RequestParam(defaultValue = "0")
+            int page,
+
+            @RequestParam(defaultValue = "5")
+            int size) {
+
+        return expenseService.getExpenses(page, size);
     }
 }

@@ -2,7 +2,9 @@ package com.stevin.personalfinancedashboard.controller;
 
 import com.stevin.personalfinancedashboard.dto.UserRequest;
 import com.stevin.personalfinancedashboard.dto.UserResponse;
+
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import com.stevin.personalfinancedashboard.entity.User;
@@ -57,5 +59,17 @@ public class UserController {
     @GetMapping("/safe")
     public List<UserResponse> getSafeUsers() {
         return userService.getAllUserResponses();
+    }
+
+    @GetMapping("/paged")
+    public Page<User> getExpensesPaged(
+
+            @RequestParam(defaultValue = "0")
+            int page,
+
+            @RequestParam(defaultValue = "5")
+            int size) {
+
+        return userService.getUsers(page, size);
     }
 }
