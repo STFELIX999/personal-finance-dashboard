@@ -16,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import org.springframework.data.domain.Sort;
+
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
 
@@ -95,6 +97,20 @@ public class ExpenseServiceImpl implements ExpenseService {
         Pageable pageable = PageRequest.of(page, size);
 
         return expenseRepository.findAll(pageable);
+    }
+    @Override
+    public List<Expense> getExpensesSorted(String sortBy) {
+
+        return expenseRepository.findAll(
+                Sort.by(sortBy));
+    }
+
+    @Override
+    public List<Expense> getExpensesSortedDesc(
+            String sortBy) {
+
+        return expenseRepository.findAll(
+                Sort.by(sortBy).descending());
     }
 
 }

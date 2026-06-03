@@ -5,6 +5,7 @@ import java.util.List;
 import com.stevin.personalfinancedashboard.dto.ExpenseRequest;
 import com.stevin.personalfinancedashboard.entity.Expense;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 
 public interface ExpenseService {
 
@@ -17,4 +18,7 @@ public interface ExpenseService {
     void deleteExpense(Long id);
 
     Page<Expense> getExpenses(int page, int size);
+
+    List<Expense> getExpensesSorted(String sortBy);
+    List<Expense> getExpensesSortedDesc(String sortBy);
 }

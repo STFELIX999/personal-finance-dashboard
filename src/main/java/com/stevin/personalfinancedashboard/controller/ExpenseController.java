@@ -64,4 +64,23 @@ public class ExpenseController {
 
         return expenseService.getExpenses(page, size);
     }
+
+    @GetMapping("/sorted")
+    public List<Expense> getSortedExpenses(
+
+            @RequestParam(defaultValue = "date")
+            String sortBy) {
+
+        return expenseService
+                .getExpensesSorted(sortBy);
+    }
+
+    @GetMapping("/sorted-desc")
+    public List<Expense> getSortedExpensesDesc(
+
+            @RequestParam String sortBy) {
+
+        return expenseService
+                .getExpensesSortedDesc(sortBy);
+    }
 }
