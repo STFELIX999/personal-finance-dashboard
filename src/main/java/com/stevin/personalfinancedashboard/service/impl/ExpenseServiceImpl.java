@@ -1,5 +1,6 @@
 package com.stevin.personalfinancedashboard.service.impl;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -127,6 +128,20 @@ public class ExpenseServiceImpl implements ExpenseService {
             LocalDate startDate, LocalDate endDate) {
 
         return expenseRepository.findByDateBetween(startDate, endDate);
+    }
+
+    @Override
+    public BigDecimal getTotalExpenses() {
+
+        return expenseRepository.getTotalExpenses();
+    }
+
+    @Override
+    public BigDecimal getTotalExpensesByCategory(
+            Long categoryId) {
+
+        return expenseRepository
+                .getTotalExpensesByCategory(categoryId);
     }
 
 }

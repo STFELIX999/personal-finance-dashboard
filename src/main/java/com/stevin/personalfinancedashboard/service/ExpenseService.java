@@ -1,5 +1,6 @@
 package com.stevin.personalfinancedashboard.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,4 +27,8 @@ public interface ExpenseService {
     List<Expense> getExpensesByCategory(Long categoryId);
 
     List<Expense> getExpensesByDateRange(LocalDate startDate, LocalDate endDate);
+
+    BigDecimal getTotalExpenses();
+
+    BigDecimal getTotalExpensesByCategory(Long categoryId);
 }

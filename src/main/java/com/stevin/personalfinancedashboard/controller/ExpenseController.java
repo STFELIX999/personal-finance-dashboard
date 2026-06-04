@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.util.List;
 
+import java.math.BigDecimal;
+import com.stevin.personalfinancedashboard.dto.ExpenseSummaryResponse;
+
 @RestController
 @RequestMapping("/expenses")
 public class ExpenseController {
@@ -108,5 +111,21 @@ public class ExpenseController {
             LocalDate endDate) {
 
         return expenseService.getExpensesByDateRange(startDate, endDate);
+    }
+
+    @GetMapping("/total")
+    public ExpenseSummaryResponse getTotalExpenses() {
+
+        BigDecimal total = expenseService.getTotalExpenses();
+
+        return new ExpenseSummaryResponse(total);
+    }
+
+    @GetMapping("/category/{categoryId}/total")
+    public ExpenseSummaryResponse getCategoryTotal(@PathVariable Long categoryId) {
+
+        BigDecimal total = expenseService.getTotalExpensesByCategory(categoryId);
+
+        return new ExpenseSummaryResponse(total);
     }
 }

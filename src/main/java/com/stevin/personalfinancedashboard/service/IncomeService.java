@@ -1,5 +1,6 @@
 package com.stevin.personalfinancedashboard.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.stevin.personalfinancedashboard.dto.IncomeRequest;
@@ -15,4 +16,8 @@ public interface IncomeService {
     Page<Income> getIncomes(int page, int size);
 
     List<Income> getIncomesBySource(String source);
+
+    BigDecimal getTotalIncome();
+
+    BigDecimal getTotalIncomeBySource(String source);
 }

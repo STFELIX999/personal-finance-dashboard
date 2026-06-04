@@ -1,5 +1,6 @@
 package com.stevin.personalfinancedashboard.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.stevin.personalfinancedashboard.dto.IncomeRequest;
@@ -51,5 +52,15 @@ public class IncomeServiceImpl implements IncomeService {
     public List<Income> getIncomesBySource(String source) {
         return incomeRepository.findBySource(source);
 
+    }
+
+    @Override
+    public BigDecimal getTotalIncome() {
+        return incomeRepository.getTotalIncome();
+    }
+    @Override
+    public BigDecimal getTotalIncomeBySource(String source) {
+
+        return incomeRepository.getTotalIncomeBySource(source);
     }
 }
