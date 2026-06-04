@@ -1,5 +1,6 @@
 package com.stevin.personalfinancedashboard.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.stevin.personalfinancedashboard.dto.ExpenseRequest;
@@ -23,4 +24,6 @@ public interface ExpenseService {
     List<Expense> getExpensesSortedDesc(String sortBy);
 
     List<Expense> getExpensesByCategory(Long categoryId);
+
+    List<Expense> getExpensesByDateRange(LocalDate startDate, LocalDate endDate);
 }

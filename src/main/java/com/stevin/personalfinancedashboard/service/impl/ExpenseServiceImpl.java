@@ -1,5 +1,6 @@
 package com.stevin.personalfinancedashboard.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.stevin.personalfinancedashboard.exception.ResourceNotFoundException;
@@ -119,6 +120,13 @@ public class ExpenseServiceImpl implements ExpenseService {
 
         return expenseRepository
                 .findByCategoryId(categoryId);
+    }
+
+    @Override
+    public List<Expense> getExpensesByDateRange(
+            LocalDate startDate, LocalDate endDate) {
+
+        return expenseRepository.findByDateBetween(startDate, endDate);
     }
 
 }
