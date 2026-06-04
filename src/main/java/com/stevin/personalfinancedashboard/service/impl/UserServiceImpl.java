@@ -2,6 +2,7 @@ package com.stevin.personalfinancedashboard.service.impl;
 
 import com.stevin.personalfinancedashboard.dto.UserRequest;
 import com.stevin.personalfinancedashboard.dto.UserResponse;
+import com.stevin.personalfinancedashboard.exception.DuplicateResourceException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +32,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerUser(UserRequest request) {
+
+        if (userRepository.findByEmail(
+                request.getEmail()).isPresent()) {
+
+            throw new DuplicateResourceException(
+                    "Email already exists");
+        }
 
         User user = new User();
 
