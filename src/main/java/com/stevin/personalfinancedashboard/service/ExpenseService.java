@@ -21,4 +21,6 @@ public interface ExpenseService {
 
     List<Expense> getExpensesSorted(String sortBy);
     List<Expense> getExpensesSortedDesc(String sortBy);
+
+    List<Expense> getExpensesByCategory(Long categoryId);
 }

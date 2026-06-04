@@ -46,4 +46,11 @@ public class IncomeController {
 
         return incomeService.getIncomes(page, size);
     }
+
+    @GetMapping("/source/{source}")
+    public List<Income> getIncomesBySource(
+            @PathVariable String source) {
+        return incomeService.getIncomesBySource(source);
+
+    }
 }

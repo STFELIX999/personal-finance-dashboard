@@ -46,4 +46,10 @@ public class IncomeServiceImpl implements IncomeService {
 
         return incomeRepository.findAll(pageable);
     }
+
+    @Override
+    public List<Income> getIncomesBySource(String source) {
+        return incomeRepository.findBySource(source);
+
+    }
 }

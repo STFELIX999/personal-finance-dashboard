@@ -113,4 +113,12 @@ public class ExpenseServiceImpl implements ExpenseService {
                 Sort.by(sortBy).descending());
     }
 
+    @Override
+    public List<Expense> getExpensesByCategory(
+            Long categoryId) {
+
+        return expenseRepository
+                .findByCategoryId(categoryId);
+    }
+
 }

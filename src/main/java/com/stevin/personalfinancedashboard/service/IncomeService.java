@@ -13,4 +13,6 @@ public interface IncomeService {
     List<Income> getAllIncomes();
 
     Page<Income> getIncomes(int page, int size);
+
+    List<Income> getIncomesBySource(String source);
 }

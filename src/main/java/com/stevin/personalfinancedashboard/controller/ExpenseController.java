@@ -83,4 +83,13 @@ public class ExpenseController {
         return expenseService
                 .getExpensesSortedDesc(sortBy);
     }
+
+    @GetMapping("/category/{categoryId}")
+    public List<Expense> getExpensesByCategory(
+
+            @PathVariable Long categoryId) {
+
+        return expenseService
+                .getExpensesByCategory(categoryId);
+    }
 }
