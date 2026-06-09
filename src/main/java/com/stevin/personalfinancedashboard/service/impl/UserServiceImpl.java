@@ -1,8 +1,10 @@
 package com.stevin.personalfinancedashboard.service.impl;
 
+import com.stevin.personalfinancedashboard.dto.LoginRequest;
 import com.stevin.personalfinancedashboard.dto.UserRequest;
 import com.stevin.personalfinancedashboard.dto.UserResponse;
 import com.stevin.personalfinancedashboard.exception.DuplicateResourceException;
+import com.stevin.personalfinancedashboard.exception.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -65,6 +67,25 @@ public class UserServiceImpl implements UserService {
             return user.getPassword().equals(password);
         }
         return false;
+    }
+
+    @Override
+    public String login(LoginRequest request) {
+
+        User user = userRepository
+                .findByEmail(request.getEmail())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "User not found"));
+
+        if (passwordEncoder.matches(
+                request.getPassword(),
+                user.getPassword())) {
+
+            return "Login Successful";
+        }
+
+        return "Invalid Credentials";
     }
 
     @Override

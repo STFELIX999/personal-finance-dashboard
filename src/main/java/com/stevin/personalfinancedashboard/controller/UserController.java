@@ -37,18 +37,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest request) {
+    public String login(
+            @RequestBody LoginRequest request) {
 
-        boolean isValid =
-                userService.login(
-                        request.getEmail(),
-                        request.getPassword());
-
-        if (isValid) {
-            return "Login Successful";
-        }
-
-        return "Invalid Email or Password";
+        return userService.login(request);
     }
 
     @GetMapping
