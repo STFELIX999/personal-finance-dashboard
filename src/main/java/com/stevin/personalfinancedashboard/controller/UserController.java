@@ -1,5 +1,6 @@
 package com.stevin.personalfinancedashboard.controller;
 
+import com.stevin.personalfinancedashboard.dto.LoginResponse;
 import com.stevin.personalfinancedashboard.dto.UserRequest;
 import com.stevin.personalfinancedashboard.dto.UserResponse;
 
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(
+    public LoginResponse login(
             @RequestBody LoginRequest request) {
 
         return userService.login(request);

@@ -1,10 +1,12 @@
 package com.stevin.personalfinancedashboard.service.impl;
 
 import com.stevin.personalfinancedashboard.dto.LoginRequest;
+import com.stevin.personalfinancedashboard.dto.LoginResponse;
 import com.stevin.personalfinancedashboard.dto.UserRequest;
 import com.stevin.personalfinancedashboard.dto.UserResponse;
 import com.stevin.personalfinancedashboard.exception.DuplicateResourceException;
 import com.stevin.personalfinancedashboard.exception.ResourceNotFoundException;
+import com.stevin.personalfinancedashboard.security.JwtService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,10 +27,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    private final JwtService jwtService;
+
     public UserServiceImpl(UserRepository userRepository,
-                           PasswordEncoder passwordEncoder) {
+                           PasswordEncoder passwordEncoder,
+                           JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -70,7 +76,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(LoginRequest request) {
+    public LoginResponse login(LoginRequest request) {
 
         User user = userRepository
                 .findByEmail(request.getEmail())
@@ -78,14 +84,17 @@ public class UserServiceImpl implements UserService {
                         new ResourceNotFoundException(
                                 "User not found"));
 
-        if (passwordEncoder.matches(
+        if(passwordEncoder.matches(
                 request.getPassword(),
                 user.getPassword())) {
 
-            return "Login Successful";
-        }
+            String token =
+                    jwtService.generateToken(
+                            user.getEmail());
 
-        return "Invalid Credentials";
+            return new LoginResponse(token);
+        }
+        throw new RuntimeException("Invalid Credentials");
     }
 
     @Override

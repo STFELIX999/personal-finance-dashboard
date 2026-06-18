@@ -1,6 +1,7 @@
 package com.stevin.personalfinancedashboard.service;
 
 import com.stevin.personalfinancedashboard.dto.LoginRequest;
+import com.stevin.personalfinancedashboard.dto.LoginResponse;
 import com.stevin.personalfinancedashboard.dto.UserRequest;
 import com.stevin.personalfinancedashboard.dto.UserResponse;
 import com.stevin.personalfinancedashboard.entity.User;
@@ -16,7 +17,7 @@ public interface UserService {
 
     boolean login(String email, String password);
 
-    String login(LoginRequest request);
+    LoginResponse login(LoginRequest request);
 
     List<User> getAllUsers();
     List<UserResponse> getAllUserResponses();
