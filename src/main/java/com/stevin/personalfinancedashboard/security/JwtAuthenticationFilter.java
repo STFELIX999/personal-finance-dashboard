@@ -98,7 +98,7 @@ public class JwtAuthenticationFilter
                     .getContext()
                     .setAuthentication(authentication);
 
-            System.out.println("Authentication Stored Successfully");
+            System.out.println("JWT Authentication Successful");
 
         }
 
