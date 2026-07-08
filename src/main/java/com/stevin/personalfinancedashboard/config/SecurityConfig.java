@@ -44,11 +44,13 @@ public class SecurityConfig {
                                 SessionCreationPolicy.STATELESS))
 
                 .authorizeHttpRequests(auth -> auth
-
                         .requestMatchers(
                                 "/users/register",
                                 "/users/login")
                         .permitAll()
+
+                        .requestMatchers("/users")
+                        .hasRole("ADMIN")
 
                         .anyRequest()
                         .authenticated())
