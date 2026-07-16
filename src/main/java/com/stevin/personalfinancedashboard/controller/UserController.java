@@ -6,6 +6,7 @@ import com.stevin.personalfinancedashboard.dto.UserResponse;
 
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.stevin.personalfinancedashboard.entity.User;
@@ -44,8 +45,10 @@ public class UserController {
         return userService.login(request);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<User> getAllUsers() {
+
         return userService.getAllUsers();
     }
 
