@@ -14,6 +14,7 @@ import com.stevin.personalfinancedashboard.service.UserService;
 
 import com.stevin.personalfinancedashboard.dto.LoginRequest;
 import java.util.List;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/users")
@@ -30,6 +31,7 @@ public class UserController {
         return userService.getWelcomeMessage();
     }
 
+    @Operation(summary = "Register a new user")
     @PostMapping("/register")
     public User registerUser(
             @Valid
@@ -38,6 +40,7 @@ public class UserController {
         return userService.registerUser(request);
     }
 
+    @Operation(summary = "Login and receive JWT token")
     @PostMapping("/login")
     public LoginResponse login(
             @RequestBody LoginRequest request) {
