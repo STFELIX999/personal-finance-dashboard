@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stevin.personalfinancedashboard.dto.LoginRequest;
 import com.stevin.personalfinancedashboard.dto.LoginResponse;
 import com.stevin.personalfinancedashboard.dto.UserRequest;
+import com.stevin.personalfinancedashboard.dto.UserResponse;
 import com.stevin.personalfinancedashboard.entity.User;
 import com.stevin.personalfinancedashboard.security.*;
 import com.stevin.personalfinancedashboard.service.UserService;
@@ -14,11 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -140,6 +145,56 @@ class UserControllerTest {
                 .andExpect(status().isBadRequest());
         verify(userService, never())
                 .registerUser(any(UserRequest.class));
+    }
+    @Test
+    @DisplayName("Should return safe users")
+    void shouldReturnSafeUsers() throws Exception {
+
+        List<UserResponse> users = List.of(
+                new UserResponse(
+                        1L,
+                        "Aadhil Viju",
+                        "aadhil.viju@gmail.com")
+        );
+
+        when(userService.getAllUserResponses())
+                .thenReturn(users);
+
+        mockMvc.perform(get("/users/safe"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].name").value("Aadhil Viju"))
+                .andExpect(jsonPath("$[0].email")
+                        .value("aadhil.viju@gmail.com"));
+        verify(userService)
+                .getAllUserResponses();
+    }
+    @Test
+    @DisplayName("Should return paginated users")
+    void shouldReturnPagedUsers() throws Exception {
+
+        User user = new User();
+        user.setId(1L);
+        user.setName("Aadhil Viju");
+        user.setEmail("aadhil.viju@gmail.com");
+        user.setRole("ROLE_USER");
+
+        Page<User> page =
+                new PageImpl<>(List.of(user));
+
+        when(userService.getUsers(0,5))
+                .thenReturn(page);
+
+        mockMvc.perform(get("/users/paged")
+                        .param("page","0")
+                        .param("size","5"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].name")
+                        .value("Aadhil Viju"))
+                .andExpect(jsonPath("$.content[0].email")
+                        .value("aadhil.viju@gmail.com"));
+        verify(userService)
+                .getUsers(0,5);
     }
 
 }
