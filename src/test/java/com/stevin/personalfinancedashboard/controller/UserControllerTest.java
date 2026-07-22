@@ -30,6 +30,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.never;
+
 @WebMvcTest(UserController.class)
 @AutoConfigureMockMvc(addFilters = false)
 class UserControllerTest {
@@ -58,8 +61,8 @@ class UserControllerTest {
     private CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Test
-    @DisplayName("Should return welcome message")
-    void shouldReturnWelcomeMessage() throws Exception {
+    @DisplayName("Should return exact welcome message")
+    void shouldReturnExactWelcomeMessage() throws Exception {
 
         when(userService.getWelcomeMessage())
                 .thenReturn("Welcome to Personal Finance Dashboard!");
@@ -97,6 +100,46 @@ class UserControllerTest {
                         .value("aadhil.viju@gmail.com"))
                 .andExpect(jsonPath("$.role")
                         .value("ROLE_USER"));
+    }
+
+    @Test
+    @DisplayName("Should login successfully")
+    void shouldLoginSuccessfully() throws Exception {
+
+        // Arrange
+        LoginRequest request = new LoginRequest();
+        request.setEmail("aadhil.viju@gmail.com");
+        request.setPassword("user333");
+
+        LoginResponse response =
+                new LoginResponse("dummy-jwt-token");
+
+        when(userService.login(any(LoginRequest.class)))
+                .thenReturn(response);
+
+        // Act & Assert
+        mockMvc.perform(post("/users/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.token")
+                        .value("dummy-jwt-token"));
+    }
+    @Test
+    @DisplayName("Should return 400 when registration request is invalid")
+    void shouldReturnBadRequestForInvalidRegistration() throws Exception {
+
+        UserRequest request = new UserRequest();
+        request.setName("");
+        request.setEmail("invalid-email");
+        request.setPassword("123");
+
+        mockMvc.perform(post("/users/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+        verify(userService, never())
+                .registerUser(any(UserRequest.class));
     }
 
 }
