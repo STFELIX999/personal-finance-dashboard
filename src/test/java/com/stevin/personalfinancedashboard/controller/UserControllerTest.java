@@ -21,6 +21,8 @@ import org.springframework.http.MediaType;
 
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 
 
 import java.util.List;
@@ -195,6 +197,57 @@ class UserControllerTest {
                         .value("aadhil.viju@gmail.com"));
         verify(userService)
                 .getUsers(0,5);
+    }
+
+    @Test
+    @DisplayName("ADMIN should access getAllUsers")
+    @WithMockUser(
+            username = "admin@gmail.com",
+            roles = {"ADMIN"}
+    )
+    void shouldAllowAdminToAccessUsers() throws Exception {
+
+        User user = new User();
+        user.setId(1L);
+        user.setName("Aadhil Viju");
+        user.setEmail("aadhil.viju@gmail.com");
+        user.setRole("ROLE_USER");
+
+        when(userService.getAllUsers())
+                .thenReturn(List.of(user));
+
+        mockMvc.perform(get("/users"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name")
+                        .value("Aadhil Viju"));
+
+        verify(userService)
+                .getAllUsers();
+    }
+    @Test
+    @DisplayName("USER should not access getAllUsers")
+    @WithMockUser(
+            username = "user@gmail.com",
+            roles = {"USER"}
+    )
+    void shouldReturnForbiddenForUserRole() throws Exception {
+
+        mockMvc.perform(get("/users"))
+                .andExpect(status().isForbidden());
+
+        verify(userService, never())
+                .getAllUsers();
+    }
+    @Test
+    @DisplayName("Anonymous user should not access getAllUsers")
+    @WithAnonymousUser
+    void shouldRejectAnonymousUser() throws Exception {
+
+        mockMvc.perform(get("/users"))
+                .andExpect(status().isUnauthorized());
+
+        verify(userService, never())
+                .getAllUsers();
     }
 
 }
